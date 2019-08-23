@@ -1,6 +1,6 @@
 <?php
-  class Customer {
-    
+  class Booking {
+     
     //Database
     private $conn;
     private $table = 'Booking';
