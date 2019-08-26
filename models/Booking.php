@@ -42,4 +42,43 @@
 
       return $stmt;
     }
+
+    //Update Bookings
+    public function update(){
+      // Create query
+      $query = 
+      'UPDATE 
+        Booking 
+      SET 
+        customer_id = :customer_id, 
+        guest_nr = :guest_nr, 
+        date = :date
+      WHERE
+        id = :id';
+      
+      //Prepare statement
+      $stmt = $this->conn->prepare($query);
+
+      // Clean data
+      $this->customer_id = htmlspecialchars(strip_tags($this->customer_id));
+      $this->guest_nr = htmlspecialchars(strip_tags($this->guest_nr));
+      $this->date = htmlspecialchars(strip_tags($this->date));
+      $this->id = htmlspecialchars(strip_tags($this->id));
+
+      // Bind data
+      $stmt->bindParam(':customer_id', $this->customer_id);
+      $stmt->bindParam(':guest_nr', $this->guest_nr);
+      $stmt->bindParam(':date', $this->date);
+      $stmt->bindParam(':id', $this->id);
+
+      //Execute statement
+      if($stmt->execute()){
+        return true;
+      }
+      
+      // Print error if something goes wrong
+      printf('Error: %s.\n', $stmt->error);
+
+      return false;
+    }
   }
