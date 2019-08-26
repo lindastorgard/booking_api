@@ -19,17 +19,19 @@
     //Get Bookings
     public function read() {
       // Create query 
-      $query = ('SELECT * from ' . $this->table);
+      // $query = ('SELECT * from ' . $this->table);
+      $query = ('SELECT * FROM Booking LEFT JOIN Customer ON Booking.customer_id = Customer.id');
+      
+        // $query = 
         // 'SELECT 
-        //   id,
-        //   customer_id,
-        //   guest_nr,
-        //   date
+        //   b.id,
+        //   b.customer_id,
+        //   b.guest_nr,
+        //   b.date
         //   FROM
-        //   ' . $this->table .' 
-          
+        //   ' .$this->table.' b
         //   LEFT JOIN
-        //   Customers ON customer_id = id
+        //   Customers c ON b.customer_id = c.id
         //   ';
       
       //Prepare statement
