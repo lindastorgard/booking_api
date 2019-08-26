@@ -21,13 +21,13 @@ $booking = new Booking($db);
 $data = json_decode(file_get_contents('php://input'));
 
 // Set ID to update
-$post->customer_id = $data->customer_id;
-$post->guest_nr = $data->guest_nr;
-$post->date = $data->date;
-$post->id = $data->id;
+$booking->customer_id = $data->customer_id;
+$booking->guest_nr = $data->guest_nr;
+$booking->date = $data->date;
+$booking->id = $data->id;
 
 // Update post
-if($post->update()){
+if($booking->update()){
     echo json_encode(
         array('message' => 'Post Updated')
     );
