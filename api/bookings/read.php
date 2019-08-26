@@ -18,7 +18,7 @@ $booking = new Booking($db);
 
 //Boking query
 $result = $booking->read();
-//Get roe count
+//Get row count
 $num = $result->rowCount();
 
 //Check if any posts
@@ -38,6 +38,7 @@ if($num > 0) {
       'id' => $id,
       'name' => $name,
       'lastname' => $lastname,
+      'email' => $email,
       'phone' => $phone
     );
 
