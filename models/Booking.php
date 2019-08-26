@@ -18,21 +18,11 @@
 
     //Get Bookings
     public function read() {
-      // Create query 
-      // $query = ('SELECT * from ' . $this->table);
-      $query = ('SELECT * FROM Booking LEFT JOIN Customer ON Booking.customer_id = Customer.id');
-      
-        // $query = 
-        // 'SELECT 
-        //   b.id,
-        //   b.customer_id,
-        //   b.guest_nr,
-        //   b.date
-        //   FROM
-        //   ' .$this->table.' b
-        //   LEFT JOIN
-        //   Customers c ON b.customer_id = c.id
-        //   ';
+      // Create query
+      $query = (
+        'SELECT * FROM Booking
+         LEFT JOIN Customer ON Booking.customer_id = Customer.id'
+      );
       
       //Prepare statement
       $stmt = $this->conn->prepare($query);
@@ -43,7 +33,8 @@
       return $stmt;
     }
     
-      // Create Booking
+    // Create Booking
+
     public function create() {
       //Create query
       $query = 'INSERT INTO ' . 
@@ -76,7 +67,6 @@
       
       // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
-
       return false;
       
     }
@@ -148,5 +138,4 @@
 
       return false;
     }
-    
   }
