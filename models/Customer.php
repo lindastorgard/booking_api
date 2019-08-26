@@ -35,7 +35,7 @@
 
 
     // Delete customer
-    public function delete(){
+    public function deleteCustomer(){
       // Create query
       $query = 
       'DELETE FROM 
