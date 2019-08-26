@@ -24,7 +24,7 @@ $data = json_decode(file_get_contents('php://input'));
 $customer->id = $data->id;
 
 // Delete post
-if($customer->deleteCustomer()){
+if($customer->deleteCustomergit()){
     echo json_encode(
         array('message' => 'Customer Deleted')
     );
