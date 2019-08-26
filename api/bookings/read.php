@@ -34,7 +34,11 @@ if($num > 0) {
       'id' => $id,
       'customer_id' => $customer_id,
       'guest_nr' => $guest_nr,
-      'date' => $date
+      'date' => $date,
+      'id' => $id,
+      'name' => $name,
+      'lastname' => $lastname,
+      'phone' => $phone
     );
 
     //Push to "data"
@@ -50,7 +54,7 @@ if($num > 0) {
   
   // set response code - 404 not found
   http_response_code(404);
-  
+
   echo json_encode(
     
     array('message' => 'No Bookings Found')
