@@ -21,10 +21,10 @@ $booking = new Booking($db);
 $data = json_decode(file_get_contents('php://input'));
 
 // Set ID to update
-$post->id = $data->id;
+$booking->id = $data->id;
 
 // Delete post
-if($post->delete()){
+if($booking->delete()){
     echo json_encode(
         array('message' => 'Post Deleted')
     );
