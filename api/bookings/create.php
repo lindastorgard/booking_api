@@ -5,8 +5,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Conternt-Type: application/json; ; charset=UTF-8');
 header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type
-Access-Control-Allow-Methods, Authorization, X-Requested-With');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 
 include_once '../../config/Database.php';
@@ -29,12 +28,12 @@ $booking->guest_nr = $data->guest_nr;
 $booking->date = $data->date;
 
 //Create booking
-if($post->create()) {
+if($booking->create()) {
     echo json_encode(
-        array('message' => 'Post Created')
+        array('message' => 'Booking Created')
     );
 } else {
     echo json_encode(
-        array('message' => 'Post Not Created')
+        array('message' => 'Booking Not Created')
     );
 } 
