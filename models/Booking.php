@@ -18,21 +18,9 @@
 
     //Get Bookings
     public function read() {
-      // Create query 
-      // $query = ('SELECT * from ' . $this->table);
-      $query = ('SELECT * FROM Booking LEFT JOIN Customer ON Booking.customer_id = Customer.id');
-      
-        // $query = 
-        // 'SELECT 
-        //   b.id,
-        //   b.customer_id,
-        //   b.guest_nr,
-        //   b.date
-        //   FROM
-        //   ' .$this->table.' b
-        //   LEFT JOIN
-        //   Customers c ON b.customer_id = c.id
-        //   ';
+      // Create query
+      $query = (
+        'SELECT * FROM Booking LEFT JOIN Customer ON Booking.customer_id = Customer.id');
       
       //Prepare statement
       $stmt = $this->conn->prepare($query);
@@ -42,4 +30,28 @@
 
       return $stmt;
     }
+
+    //GET Single Booking
+    public function read_single_booking(){
+      $query = (
+        'SELECT * FROM Booking JOIN Customers ON Booking.customer_id = Customer.id WHERE Booking.id = ?'
+      );
+
+    //Prepare statement
+      $stmt = $this->conn->prepare($query);
+
+    //BIND ID
+      $stmt->bindParam(1, $this->id);
+
+    //Execute statement
+      $stmt->execute();
+
+    //fetch an associative array
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    //Set properties
+      $this->customer_id = $row['customer_id'];
+      $this->guest_nr = $row['guest_nr'];
+      $this->date = $row['date'];    
+      }
   }
