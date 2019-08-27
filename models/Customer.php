@@ -99,7 +99,7 @@
         name = :name, 
         lastname = :lastname, 
         email = :email,
-        phone = :phone;
+        phone = :phone
       WHERE
         id = :id';
 
