@@ -17,12 +17,13 @@
       $this->conn = $db;
     }
 
+    //Create customer
+
     public function createCustomer() {
       //Create query
       $query = 'INSERT INTO ' .
           $this->table . '
         SET
-          id = :id,
           name = :name,
           lastname = :lastname,
           email = :email,
@@ -32,14 +33,12 @@
       $stmt = $this->conn->prepare($query);
 
       //Clean data
-      $this->id = htmlspecialchars(strip_tags($this->id));
       $this->name = htmlspecialchars(strip_tags($this->name));
       $this->lastname = htmlspecialchars(strip_tags($this->lastname));
       $this->email = htmlspecialchars(strip_tags($this->email));
       $this->phone = htmlspecialchars(strip_tags($this->phone));
 
       // Bind data
-      $stmt->bindParam(':id', $this->id);
       $stmt->bindParam(':name', $this->name);
       $stmt->bindParam(':lastname', $this->lastname);
       $stmt->bindParam(':email', $this->email);
@@ -92,7 +91,6 @@
 
         return $stmt;
     }
-  }
 
 
     // Delete customer
