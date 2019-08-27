@@ -55,7 +55,7 @@
   
 
     //Update Customers
-    public function update(){
+    public function updateCustomer(){
       // Create query
       $query =
       'UPDATE 
