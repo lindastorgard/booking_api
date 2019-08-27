@@ -54,14 +54,16 @@
     public function create() {
       //Create query
       $query = 'INSERT INTO ' .
-          $this->table . '
+          $this->table .'
         SET
           customer_id = :customer_id,
           guest_nr = :guest_nr,
-          date = :date';
-
+          date = :date;
+          ';
+          
       // Prepare statement
       $stmt = $this->conn->prepare($query);
+      
 
       //Clean data
       $this->customer_id = htmlspecialchars(strip_tags($this->customer_id));
@@ -75,7 +77,8 @@
 
       //Execute query
       if($stmt->execute()) {
-        return $stmt->id;
+        $last_id = $this->conn->lastInsertId();
+        return $last_id;
       }
 
       // Print error if something goes wrong

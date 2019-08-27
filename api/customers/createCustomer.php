@@ -28,7 +28,7 @@ $customer->email = $data->email;
 $customer->phone = $data->phone;
 
 //Create customer
-if($customer->createCustomer()) {
+if($customer->createCustomer() > 0) {
     echo json_encode(
         array('message' => 'Customer Created')
     );
