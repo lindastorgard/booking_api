@@ -28,7 +28,7 @@ if($booking->delete()){
     echo json_encode(
         array('message' => 'Post Deleted')
     );
-}else{
+} else {
     echo json_encode(
         array('message' => 'Post Not Deleted')
     );
