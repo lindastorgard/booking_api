@@ -93,6 +93,46 @@
         return $stmt;
     }
 
+    //Update Customers
+    public function updateCustomer(){
+      // Create query
+      $query =
+      'UPDATE 
+        Customer 
+      SET 
+        name = :name, 
+        lastname = :lastname, 
+        email = :email,
+        phone = :phone;
+      WHERE
+        id = :id';
+
+      //Prepare statement
+      $stmt = $this->conn->prepare($query);
+
+      // Clean data
+      $this->name = htmlspecialchars(strip_tags($this->name));
+      $this->lastname = htmlspecialchars(strip_tags($this->lastname));
+      $this->email = htmlspecialchars(strip_tags($this->email));
+      $this->phone = htmlspecialchars(strip_tags($this->phone));
+      $this->id = htmlspecialchars(strip_tags($this->id));
+
+      // Bind data
+      $stmt->bindParam(':name', $this->name);
+      $stmt->bindParam(':lastname', $this->lastname);
+      $stmt->bindParam(':email', $this->email);
+      $stmt->bindParam(':phone', $this->phone);
+      $stmt->bindParam(':id', $this->id);
+
+      //Execute statement
+      if($stmt->execute()){
+        return true;
+      }
+      // Print error if something goes wrong
+      printf('Error: %s.\n', $stmt->error);
+
+      return false;
+    }
 
     // Delete customer
     public function deleteCustomer(){
