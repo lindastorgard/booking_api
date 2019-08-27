@@ -28,7 +28,7 @@ $booking->guest_nr = $data->guest_nr;
 $booking->date = $data->date;
 
 //Create booking
-if($booking->create()) {
+if($booking->create() > 0) {
     echo json_encode(
         array('message' => 'Booking Created')
     );
