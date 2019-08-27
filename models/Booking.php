@@ -1,6 +1,6 @@
 <?php
   class Booking {
-     
+
     //Database connection & table name
     private $conn;
     private $table = 'Booking';
@@ -23,7 +23,7 @@
         'SELECT * FROM Booking
          LEFT JOIN Customer ON Booking.customer_id = Customer.id'
       );
-      
+
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -32,12 +32,28 @@
 
       return $stmt;
     }
-    
+
+    // Read single booking
+      public function readSingle($id) {
+        $query = (
+            'SELECT * FROM Booking
+             LEFT JOIN Customer ON Booking.customer_id = Customer.id
+             WHERE Booking.id = :id');
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        return $stmt;
+      }
+
     // Create Booking
 
     public function create() {
       //Create query
-      $query = 'INSERT INTO ' . 
+      $query = 'INSERT INTO ' .
           $this->table . '
         SET
           id = :id,
@@ -64,18 +80,18 @@
       if($stmt->execute()) {
         return true;
       }
-      
+
       // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
       return false;
-      
+
     }
 
-    
+
     //Update Bookings
     public function update(){
       // Create query
-      $query = 
+      $query =
       'UPDATE 
         Booking 
       SET 
@@ -84,7 +100,7 @@
         date = :date
       WHERE
         id = :id';
-      
+
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -106,19 +122,19 @@
       }
        // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
-     
+
       return false;
     }
 
     // Delete booking
     public function delete(){
       // Create query
-      $query = 
+      $query =
       'DELETE FROM 
         Booking 
       WHERE 
         id = :id';
-    
+
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -132,7 +148,7 @@
       if($stmt->execute()){
         return true;
       }
-      
+
       // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
 
