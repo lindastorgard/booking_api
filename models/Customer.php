@@ -1,6 +1,6 @@
 <?php
   class Customer {
-     
+
     //Database connection & table name
     private $conn;
     private $table = 'Customer';
@@ -23,7 +23,7 @@
       $query = (
         'SELECT * FROM Customer'
       );
-      
+
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -31,5 +31,24 @@
       $stmt->execute();
 
       return $stmt;
+    }
+
+    public function readCustomer($id) {
+        // Create query
+        $query = (
+        'SELECT * FROM Customer
+        WHERE Customer.id = :id'
+        );
+
+        // Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind data
+        $stmt->bindParam(':id', $id);
+
+        // Execute statement
+        $stmt->execute();
+
+        return $stmt;
     }
   }
