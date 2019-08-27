@@ -22,7 +22,6 @@ $booking = new Booking($db);
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
-$booking->id = $data->id;
 $booking->customer_id = $data->customer_id;
 $booking->guest_nr = $data->guest_nr;
 $booking->date = $data->date;

@@ -22,7 +22,6 @@ $customer = new customer($db);
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
-$customer->id = $data->id;
 $customer->name = $data->name;
 $customer->lastname = $data->lastname;
 $customer->email = $data->email;
