@@ -28,7 +28,7 @@ $customer->phone = $data->phone;
 $customer->id = $data->id;
 
 // Update post
-if($customer->update()){
+if($customer->updateCustomer()){
     echo json_encode(
         array('message' => 'Post Updated')
     );
