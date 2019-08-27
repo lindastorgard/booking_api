@@ -49,7 +49,6 @@ if($num > 0) {
     //Turn to JSON & output
     echo json_encode($booking_arr);
 } else {
-
     // set response code - 404 not found
     http_response_code(404);
 

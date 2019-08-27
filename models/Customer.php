@@ -1,6 +1,5 @@
 <?php
   class Customer {
-
     //Database connection & table name
     private $conn;
     private $table = 'Customer';
@@ -15,7 +14,7 @@
     //Constructor with DB
     public function __construct($db) {
       $this->conn = $db;
-    }
+    };
 
     //Create customer
 
@@ -53,10 +52,8 @@
       // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
       return false;
-
     }
-
-
+    
     //Get Customers
     public function readCustomers() {
       // Create query
@@ -69,7 +66,6 @@
 
       //Execute statement
       $stmt->execute();
-
       return $stmt;
     }
 
@@ -159,7 +155,6 @@
       
       // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
-
       return false;
     }
   }
