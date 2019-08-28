@@ -3,7 +3,7 @@
 //CORS (Cross-Origin Resource Sharing) header
 //Should be changed to http://localhost:3000/
 header('Access-Control-Allow-Origin: *');
-header('Conternt-Type: application/json; ; charset=UTF-8');
+header('Content-Type: application/json; ; charset=UTF-8');
 
 include_once '../../config/Database.php';
 include_once '../../models/Config.php';
@@ -12,18 +12,18 @@ include_once '../../models/Config.php';
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate blog bookings object
+//Instantiate config object
 
 $config = new Config($db);
 
-//Boking query
+//Config query
 $result = $config->readConfig();
 //Get row count
 $num = $result->rowCount();
 
 //Check if any posts
 if($num > 0) {
-  //Booking array
+  //Config array
   $config_arr = array();
   $config_arr['data'] = array();
 
