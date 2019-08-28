@@ -5,7 +5,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Conternt-Type: application/json; ; charset=UTF-8');
 
-include_once '../../configs/Database.php';
+include_once '../../config/Database.php';
 include_once '../../models/Config.php';
 
 //Instantiate DB & connect
@@ -14,7 +14,7 @@ $db = $database->connect();
 
 //Instantiate blog bookings object
 
-$config = new Booking($db);
+$config = new Config($db);
 
 //Boking query
 $result = $config->readConfig();
