@@ -35,7 +35,6 @@ if($num > 0) {
       'customer_id' => $customer_id,
       'guest_nr' => $guest_nr,
       'date' => $date,
-      'id' => $id,
       'name' => $name,
       'lastname' => $lastname,
       'email' => $email,
@@ -51,13 +50,13 @@ if($num > 0) {
 
   //Turn to JSON & output
   echo json_encode($booking_arr);
-  } else {  
-  
+  } else {
+
   // set response code - 404 not found
   http_response_code(404);
 
   echo json_encode(
-    
+
     array('message' => 'No Bookings Found')
   );
 }
