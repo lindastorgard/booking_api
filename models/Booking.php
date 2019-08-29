@@ -20,7 +20,9 @@
     public function read() {
       // Create query
       $query = (
-        'SELECT * FROM Booking
+        'SELECT Booking.id, Booking.customer_id, Booking.guest_nr, Booking.date, 
+         Customer.name, Customer.lastname, Customer.email, Customer.phone 
+         FROM Booking
          LEFT JOIN Customer ON Booking.customer_id = Customer.id'
       );
 
@@ -36,7 +38,9 @@
     // Read single booking
       public function readSingle($id) {
         $query = (
-            'SELECT * FROM Booking
+            'SELECT Booking.id, Booking.customer_id, Booking.guest_nr, Booking.date, 
+             Customer.name, Customer.lastname, Customer.email, Customer.phone
+             FROM Booking
              LEFT JOIN Customer ON Booking.customer_id = Customer.id
              WHERE Booking.id = :id');
 
@@ -60,10 +64,10 @@
           guest_nr = :guest_nr,
           date = :date;
           ';
-          
+
       // Prepare statement
       $stmt = $this->conn->prepare($query);
-      
+
 
       //Clean data
       $this->customer_id = htmlspecialchars(strip_tags($this->customer_id));
