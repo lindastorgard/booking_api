@@ -9,6 +9,7 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,
 
 include_once '../../config/Database.php';
 include_once '../../models/Booking.php';
+include_once '../../models/Customer.php';
 
 //Instantiate DB & connect
 $database = new Database();
