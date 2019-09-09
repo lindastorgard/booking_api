@@ -34,6 +34,8 @@ $customer->customer_id = $data->customer_id;
 $customerResult = $customer->readCustomer($customer->customer_id);
 $result = $customerResult->fetch(PDO::FETCH_OBJ);
 $to = $result->email;
+print_r($result);
+print_r($to);
 
 // Delete post
 if($booking->delete()){
@@ -45,12 +47,6 @@ if($booking->delete()){
         array('message' => 'Post Not Deleted')
     );
 }
-
-print_r($result);
-print_r($to);
-
-// $to = $result->email;
-
 $msg = "Hey {$result->name} {$result->lastname}, your booking is now deleted";
 // $msg = "Dear {$data->name}, thank you for you reservation on {$newDate}.(\n) We are looking forward having you at our restaurant";
 
