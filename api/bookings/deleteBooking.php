@@ -29,6 +29,12 @@ $data = json_decode(file_get_contents('php://input'));
 // Set ID to update
 $booking->id = $data->id;
 
+$customer = new Customer($db);
+$customer->customer_id = $data->customer_id;
+$customerResult = $customer->readCustomer($customer->customer_id);
+$result = $customerResult->fetch(PDO::FETCH_OBJ);
+$to = $result->email;
+
 // Delete post
 if($booking->delete()){
     echo json_encode(
@@ -40,11 +46,10 @@ if($booking->delete()){
     );
 }
 
-$customer = new Customer($db);
-$customerResult = $customer->readCustomer($booking->customer_id);
-$result = $customerResult->fetch(PDO::FETCH_OBJ);
+print_r($result);
+print_r($to);
 
-$to = $result->email;
+// $to = $result->email;
 
 $msg = "Hey {$result->name} {$result->lastname}, your booking is now deleted";
 // $msg = "Dear {$data->name}, thank you for you reservation on {$newDate}.(\n) We are looking forward having you at our restaurant";
@@ -53,4 +58,4 @@ $msg = "Hey {$result->name} {$result->lastname}, your booking is now deleted";
 $msg = wordwrap($msg,70);
 
 // send email
-mail($to, "Your booking is deleted" ,$msg);
+mail($to, "Your booking is" ,$msg);
