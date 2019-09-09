@@ -11,6 +11,11 @@ include_once '../../config/Database.php';
 include_once '../../models/Booking.php';
 include_once '../../models/Customer.php';
 
+//show errors 
+error_reporting(-1);
+ini_set('display_errors', 'On');
+set_error_handler("var_dump");
+
 //Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
@@ -36,14 +41,19 @@ if($booking->create() > 0) {
     );
 } 
 
-$to = "linda.storgard@gmail.com";
+$customer = new Customer($db);
+$customerResult = $customer->readCustomer($booking->customer_id);
+$result = $customerResult->fetch(PDO::FETCH_OBJ);
+print_r($result);
 
-$msg = "Dear  thank you for your reservation on {$data->date} for {$data->guest_nr}";
+
+$to = $result->email;
+
+$msg = "Hey {$result->name} {$result->lastname}, thank you for your reservation on {$data->date} for {$data->guest_nr}. We are looking forward hosting you";
 // $msg = "Dear {$data->name}, thank you for you reservation on {$newDate}.(\n) We are looking forward having you at our restaurant";
 
 // use wordwrap() if lines are longer than 70 characters
 $msg = wordwrap($msg,70);
-
 
 // send email
 mail($to, "Thank you for your reservation" ,$msg);
