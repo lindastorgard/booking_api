@@ -9,6 +9,12 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 include_once '../../config/Database.php';
 include_once '../../models/Booking.php';
+include_once '../../models/Customer.php';
+
+//show errors 
+error_reporting(-1);
+ini_set('display_errors', 'On');
+set_error_handler("var_dump");
 
 //Instantiate DB & connect
 $database = new Database();
@@ -33,3 +39,18 @@ if($booking->delete()){
         array('message' => 'Post Not Deleted')
     );
 }
+
+$customer = new Customer($db);
+$customerResult = $customer->readCustomer($booking->customer_id);
+$result = $customerResult->fetch(PDO::FETCH_OBJ);
+
+$to = $result->email;
+
+$msg = "Hey {$result->name} {$result->lastname}, your booking is now deleted";
+// $msg = "Dear {$data->name}, thank you for you reservation on {$newDate}.(\n) We are looking forward having you at our restaurant";
+
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+// send email
+mail($to, "Your booking is deleted" ,$msg);

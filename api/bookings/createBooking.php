@@ -44,8 +44,6 @@ if($booking->create() > 0) {
 $customer = new Customer($db);
 $customerResult = $customer->readCustomer($booking->customer_id);
 $result = $customerResult->fetch(PDO::FETCH_OBJ);
-print_r($result);
-
 
 $to = $result->email;
 
