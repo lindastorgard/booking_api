@@ -34,3 +34,15 @@ if($booking->create() > 0) {
         array('message' => 'Booking Not Created')
     );
 } 
+
+$to = "linda.storgard@gmail.com";
+
+$msg = "Dear  thank you for your reservation on {$data->date} for {$data->guest_nr}";
+// $msg = "Dear {$data->name}, thank you for you reservation on {$newDate}.(\n) We are looking forward having you at our restaurant";
+
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+
+// send email
+mail($to, "Thank you for your reservation" ,$msg);
