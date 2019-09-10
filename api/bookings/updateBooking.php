@@ -9,6 +9,7 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 include_once '../../config/Database.php';
 include_once '../../models/Booking.php';
+include_once '../../models/Customer.php';
 
 //Instantiate DB & connect
 $database = new Database();
@@ -36,3 +37,18 @@ if($booking->update()){
         array('message' => 'Post Not Updated')
     );
 }
+
+$customer = new Customer($db);
+$customerResult = $customer->readCustomer($booking->customer_id);
+$result = $customerResult->fetch(PDO::FETCH_OBJ);
+
+$to = $result->email;
+
+$msg = "Hey {$result->name} {$result->lastname}, your booking has been updated";
+
+
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+// send email
+mail($to, "Yor booking has been updated" ,$msg);

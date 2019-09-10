@@ -53,7 +53,7 @@ if($num > 0) {
   } else {
 
   // set response code - 404 not found
-  http_response_code(404);
+  // http_response_code(404);
 
   echo json_encode(
 

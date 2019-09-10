@@ -9,6 +9,12 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,
 
 include_once '../../config/Database.php';
 include_once '../../models/Booking.php';
+include_once '../../models/Customer.php';
+
+//show errors 
+error_reporting(-1);
+ini_set('display_errors', 'On');
+set_error_handler("var_dump");
 
 //Instantiate DB & connect
 $database = new Database();
@@ -34,3 +40,17 @@ if($booking->create() > 0) {
         array('message' => 'Booking Not Created')
     );
 } 
+
+$customer = new Customer($db);
+$customerResult = $customer->readCustomer($booking->customer_id);
+$result = $customerResult->fetch(PDO::FETCH_OBJ);
+
+$to = $result->email;
+
+$msg = "Hey {$result->name} {$result->lastname}, thank you for your reservation on {$data->date} for {$data->guest_nr}. We are looking forward hosting you";
+
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+// send email
+mail($to, "Thank you for your reservation" ,$msg);
