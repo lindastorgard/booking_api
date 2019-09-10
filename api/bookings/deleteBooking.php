@@ -25,11 +25,21 @@ $booking = new Booking($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents('php://input'));
+// print_r($data);
 
 // Set ID to update
 $booking->id = $data->id;
-$booking->customer_id = $data->customer_id;
 
+$bookingResult = $booking->readSingle($booking->id);
+$result = $bookingResult->fetch(PDO::FETCH_OBJ);
+
+$customer = new Customer($db);
+
+$customerResult = $customer->readCustomer($result->customer_id);
+$selectedCustomer = $customerResult->fetch(PDO::FETCH_OBJ);
+print_r($selectedCustomer);
+print_r($selectedCustomer->email);
+$to = $selectedCustomer->email;
 
 // Delete post
 if($booking->delete()){
@@ -42,16 +52,13 @@ if($booking->delete()){
     );
 }
 
-$customer = new Customer($db);
-$customerResult = $customer->readCustomer($booking->customer_id);
-$result = $customerResult->fetch(PDO::FETCH_OBJ);
-$to = $result->email;
+
+// $to = $result->email;
 
 $msg = "Hey {$result->name} {$result->lastname}, your booking is now deleted";
-// $msg = "Dear {$data->name}, thank you for you reservation on {$newDate}.(\n) We are looking forward having you at our restaurant";
 
 // use wordwrap() if lines are longer than 70 characters
 $msg = wordwrap($msg,70);
 
 // send email
-mail($to, "Your booking is" ,$msg);
+mail($to, "Your booking is deleted" ,$msg);
