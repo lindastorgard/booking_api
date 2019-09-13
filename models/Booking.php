@@ -1,6 +1,6 @@
 <?php
   class Booking {
-     
+
     //Database connection & table name
     private $conn;
     private $table = 'Booking';
@@ -20,10 +20,12 @@
     public function read() {
       // Create query
       $query = (
-        'SELECT * FROM Booking
+        'SELECT Booking.id, Booking.customer_id, Booking.guest_nr, Booking.date, 
+         Customer.name, Customer.lastname, Customer.email, Customer.phone 
+         FROM Booking
          LEFT JOIN Customer ON Booking.customer_id = Customer.id'
       );
-      
+
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -32,50 +34,68 @@
 
       return $stmt;
     }
-    
+
+    // Read single booking
+      public function readSingle($id) {
+        $query = (
+            'SELECT Booking.id, Booking.customer_id, Booking.guest_nr, Booking.date, 
+             Customer.name, Customer.lastname, Customer.email, Customer.phone
+             FROM Booking
+             LEFT JOIN Customer ON Booking.customer_id = Customer.id
+             WHERE Booking.id = :id');
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        return $stmt;
+      }
+
     // Create Booking
 
     public function create() {
       //Create query
-      $query = 'INSERT INTO ' . 
-          $this->table . '
+      $query = 'INSERT INTO ' .
+          $this->table .'
         SET
-          id = :id,
           customer_id = :customer_id,
           guest_nr = :guest_nr,
-          date = :date';
+          date = :date;
+          ';
 
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
+
       //Clean data
-      $this->id = htmlspecialchars(strip_tags($this->id));
       $this->customer_id = htmlspecialchars(strip_tags($this->customer_id));
       $this->guest_nr = htmlspecialchars(strip_tags($this->guest_nr));
       $this->date = htmlspecialchars(strip_tags($this->date));
 
       // Bind data
-      $stmt->bindParam(':id', $this->id);
       $stmt->bindParam(':customer_id', $this->customer_id);
       $stmt->bindParam(':guest_nr', $this->guest_nr);
       $stmt->bindParam(':date', $this->date);
 
       //Execute query
       if($stmt->execute()) {
-        return true;
+        $last_id = $this->conn->lastInsertId();
+        return $last_id;
       }
-      
+
       // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
-      return false;
-      
+      return 0;
+
     }
 
-    
+
     //Update Bookings
     public function update(){
       // Create query
-      $query = 
+      $query =
       'UPDATE 
         Booking 
       SET 
@@ -84,7 +104,7 @@
         date = :date
       WHERE
         id = :id';
-      
+
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -106,19 +126,19 @@
       }
        // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
-     
+
       return false;
     }
 
     // Delete booking
     public function delete(){
       // Create query
-      $query = 
+      $query =
       'DELETE FROM 
         Booking 
       WHERE 
         id = :id';
-    
+
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -132,7 +152,7 @@
       if($stmt->execute()){
         return true;
       }
-      
+
       // Print error if something goes wrong
       printf('Error: %s.\n', $stmt->error);
 

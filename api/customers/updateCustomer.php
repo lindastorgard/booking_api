@@ -3,31 +3,32 @@
 //CORS (Cross-Origin Resource Sharing) header
 //Should be changed to http://localhost:3000/
 header('Access-Control-Allow-Origin: *');
-header('Conternt-Type: application/json; ; charset=UTF-8');
+header('Content-Type: application/json; ; charset=UTF-8');
 header('Access-Control-Allow-Methods: PUT');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Conternt-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Booking.php';
+include_once '../../models/Customer.php';
 
 //Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate blog bookings object
-$booking = new Booking($db);
+//Instantiate customer object
+$customer = new Customer($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents('php://input'));
 
 // Set ID to update
-$booking->customer_id = $data->customer_id;
-$booking->guest_nr = $data->guest_nr;
-$booking->date = $data->date;
-$booking->id = $data->id;
+$customer->name = $data->name;
+$customer->lastname = $data->lastname;
+$customer->email = $data->email;
+$customer->phone = $data->phone;
+$customer->id = $data->id;
 
 // Update post
-if($booking->update()){
+if($customer->updateCustomer()){
     echo json_encode(
         array('message' => 'Post Updated')
     );
@@ -36,5 +37,3 @@ if($booking->update()){
         array('message' => 'Post Not Updated')
     );
 }
-
-

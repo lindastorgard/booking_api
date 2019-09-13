@@ -3,7 +3,7 @@
 //CORS (Cross-Origin Resource Sharing) header
 //Should be changed to http://localhost:3000/
 header('Access-Control-Allow-Origin: *');
-header('Conternt-Type: application/json; ; charset=UTF-8');
+header('Content-Type: application/json; ; charset=UTF-8');
 
 include_once '../../config/Database.php';
 include_once '../../models/Booking.php';
@@ -12,7 +12,7 @@ include_once '../../models/Booking.php';
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate blog bookings object
+//Instantiate bookings object
 
 $booking = new Booking($db);
 
@@ -35,7 +35,6 @@ if($num > 0) {
       'customer_id' => $customer_id,
       'guest_nr' => $guest_nr,
       'date' => $date,
-      'id' => $id,
       'name' => $name,
       'lastname' => $lastname,
       'email' => $email,
@@ -51,13 +50,13 @@ if($num > 0) {
 
   //Turn to JSON & output
   echo json_encode($booking_arr);
-  } else {  
-  
+  } else {
+
   // set response code - 404 not found
-  http_response_code(404);
+  // http_response_code(404);
 
   echo json_encode(
-    
+
     array('message' => 'No Bookings Found')
   );
 }

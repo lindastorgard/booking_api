@@ -3,37 +3,41 @@
 //CORS (Cross-Origin Resource Sharing) header
 //Should be changed to http://localhost:3000/
 header('Access-Control-Allow-Origin: *');
-header('Conternt-Type: application/json; ; charset=UTF-8');
+header('Content-Type: application/json; ; charset=UTF-8');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 
 include_once '../../config/Database.php';
-include_once '../../models/Booking.php';
+include_once '../../models/Customer.php';
 
 //Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate blog bookings object
-
-$booking = new Booking($db);
+//Instantiate customers object
+$customer = new customer($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
-$booking->id = $data->id;
-$booking->customer_id = $data->customer_id;
-$booking->guest_nr = $data->guest_nr;
-$booking->date = $data->date;
+$customer->name = $data->name;
+$customer->lastname = $data->lastname;
+$customer->email = $data->email;
+$customer->phone = $data->phone;
 
-//Create booking
-if($booking->create()) {
+//Create customer
+$newCustomerId = $customer->createCustomer();
+
+if($newCustomerId > 0) {
     echo json_encode(
-        array('message' => 'Booking Created')
+        array(
+            'message' => 'Customer Created',
+            'id' => $newCustomerId
+        )
     );
 } else {
     echo json_encode(
-        array('message' => 'Booking Not Created')
+        array('message' => 'Customer Not Created')
     );
-} 
+}
